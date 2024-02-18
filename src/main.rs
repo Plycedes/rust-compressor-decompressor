@@ -1,5 +1,6 @@
 use std::io;
 mod comp;
+mod decom;
 
 fn main(){
     let mut input = String::new();
@@ -7,6 +8,7 @@ fn main(){
 
     match input.trim() {
         "comp" => comp::compress(),
+        "decom" => decom::decomp(),
         _ => println!("Invalid Input"),
     }
 }
