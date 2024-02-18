@@ -7,8 +7,8 @@ use std::io::copy;
 use std::io::BufReader;
 use std::time::Instant;
 
-pub fn compress(){
-    let path = "book.pdf";
+pub fn compress(s: &str){
+    let path = s;
     let output = "compressed".to_owned() + path;
     let mut input = BufReader::new(File::open(path).unwrap());
     let output = File::create(output).unwrap();

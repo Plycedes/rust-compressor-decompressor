@@ -1,8 +1,8 @@
 use std::fs;
 use std::io;
 
-pub fn decomp(){
-    let path = "test.zip";
+pub fn decomp(s: &str){
+    let path = s;
     let file = fs::File::open(&path).unwrap();
     let mut archive = zip::ZipArchive::new(file).unwrap();
 

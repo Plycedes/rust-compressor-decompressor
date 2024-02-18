@@ -1,0 +1,68 @@
+import { Button, VerticalBox, LineEdit } from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+
+    in property<string> result: "";
+    callback decompress(string);
+    callback compress(string);
+
+    background: @linear-gradient(90deg, #0084bd 0%,  #a70099 100%);
+    GridLayout {
+        padding: 50px;
+        spacing: 20px;
+        Row {            
+            Text {
+                text: "Decrypt";
+                horizontal-alignment: center;
+                font-size: 30px;
+                font-weight: 1100;
+            }
+        }    
+
+        Row {
+            path := LineEdit {
+                font-size: 20px;
+                horizontal-alignment: center;
+                placeholder-text: "Enter the location";
+                height: 35px;
+            }
+        }
+
+        Row {
+            Button {
+                text: "Compress";
+                primary: true;
+                height: 35px;
+                clicked => {compress(path.text)}                               
+            }
+        }
+
+        Row {
+            Button {
+                text: "Extract";
+                primary: true;
+                height: 35px;
+                clicked => {decompress(path.text)}                               
+            }
+        }
+
+        Row{
+            VerticalBox {
+                Rectangle {
+                    background: #ffffff30;
+                    height: 100px;
+                    border-color: #ffffff34;
+                    border-radius: 5px;
+                    border-width: 0.7px;
+
+                    Text{
+                        color: #dfdfdf;
+                        font-size: 16px;
+                        font-weight: 500;
+                        text: root.result;
+                    }
+                }
+            }
+        }
+    }
+}
