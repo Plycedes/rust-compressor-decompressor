@@ -10,6 +10,7 @@ build = "build.rs"
 flate2 = "1.0.24"
 zip = "0.6.2"
 slint = "1.0"
+tar = "0.4.43"
 
 [build-dependencies]
 slint-build = "1.0"

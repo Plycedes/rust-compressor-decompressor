@@ -9,8 +9,11 @@ fn main() -> Result<(), slint::PlatformError> {
     ui.on_compress(move |string| {
         let ui: AppWindow = ui_handle.unwrap();
 
-        comp::compress(&string);
-        ui.set_result("File compressed".into());
+        if let Err(e) = comp::compress(&string) {
+            ui.set_result(format!("Compression failed: {}", e).into());
+        } else {
+            ui.set_result("File compressed successfully".into());
+        }
     });
 
     let ui_handle = ui.as_weak();
