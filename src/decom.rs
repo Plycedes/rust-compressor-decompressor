@@ -1,16 +1,20 @@
 use std::fs;
 use std::io;
+use std::path::Path;
 
 pub fn decomp(s: &str) -> Result<String, String>{
-    let path = s;
+    let path = Path::new(s);
     let file = fs::File::open(&path).map_err(|_| "Failed to open file")?;
     let mut archive = zip::ZipArchive::new(file).map_err(|_| "Failed to read ZIP archive")?;
+
+    let output_dir = path.with_extension("");
+    fs::create_dir_all(&output_dir).map_err(|_| "Failed to create top-level folder")?;
 
     for i in 0..archive.len() {
         let mut file = archive.by_index(i).map_err(|_| "Failed to access file in ZIP")?;
 
         let output = match file.enclosed_name() {
-            Some(path) => path.to_owned(),
+            Some(path) => output_dir.join(path),
             None => continue,
         };
         if (*file.name()).ends_with('/'){
