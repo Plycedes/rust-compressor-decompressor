@@ -1,3 +1,5 @@
+use rfd::FileDialog;
+
 mod comp;
 mod decom;
 slint::include_modules!();
@@ -26,5 +28,15 @@ fn main() -> Result<(), slint::PlatformError> {
         }
     });
 
+    let ui_handle = ui.as_weak();
+    ui.on_browse(move || {
+        if let Some(path) = FileDialog::new().pick_folder() {
+            if let Some(ui) = ui_handle.upgrade() {
+                ui.set_path(path.display().to_string().into());
+            }
+        }
+    });
+
     ui.run()
 }
+
