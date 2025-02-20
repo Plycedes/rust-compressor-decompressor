@@ -29,11 +29,24 @@ fn main() -> Result<(), slint::PlatformError> {
     });
 
     let ui_handle = ui.as_weak();
-    ui.on_browse(move || {
-        if let Some(path) = FileDialog::new().pick_folder() {
+    ui.on_browse_file(move || {       
+        let dialog = FileDialog::new();
+        
+        if let Some(path) = dialog.add_filter("ZIP Files & Folders", &["zip"]).pick_file() {
             if let Some(ui) = ui_handle.upgrade() {
                 ui.set_path(path.display().to_string().into());
             }
+        }
+    });
+
+    let ui_handle = ui.as_weak();
+    ui.on_browse_folder(move || {
+        let dialog = FileDialog::new();
+
+        if let Some(path) = dialog.pick_folder() {
+            if let Some(ui) = ui_handle.upgrade() {
+                ui.set_path(path.display().to_string().into());
+            }            
         }
     });
 

@@ -7,7 +7,8 @@ export component AppWindow inherits Window {
 
     callback decompress(string);
     callback compress(string);
-    callback browse();
+    callback browse_file();
+    callback browse_folder();
 
     background: @linear-gradient(90deg, #2c3e50 0%,  #3498db 100%);
     GridLayout {
@@ -22,11 +23,11 @@ export component AppWindow inherits Window {
             }
         }    
 
-        Row {
-            GridLayout {                
+        Row {            
+            GridLayout {                                
                 spacing: 5px;                 
         
-                path := LineEdit {
+                folderpath := LineEdit {
                     font-size: 20px;
                     horizontal-alignment: center;
                     placeholder-text: "Enter the location";
@@ -36,7 +37,7 @@ export component AppWindow inherits Window {
                 Button {
                     text: "Browse";
                     height: 35px;                                        
-                    clicked => { browse(); }
+                    clicked => { browse_folder(); }
                 }
             }
         }
@@ -46,7 +47,26 @@ export component AppWindow inherits Window {
                 text: "Compress";
                 primary: true;
                 height: 35px;
-                clicked => {compress(path.text)}                               
+                clicked => {compress(folderpath.text)}                               
+            }
+        }
+
+        Row {
+            GridLayout {                
+                spacing: 5px;                
+        
+                filepath := LineEdit {
+                    font-size: 20px;
+                    horizontal-alignment: center;
+                    placeholder-text: "Enter the location";
+                    height: 35px;
+                    text <=> root.path;
+                }
+                Button {
+                    text: "Browse";
+                    height: 35px;                                        
+                    clicked => { browse_file(); }
+                }
             }
         }
 
@@ -55,7 +75,7 @@ export component AppWindow inherits Window {
                 text: "Extract";
                 primary: true;
                 height: 35px;
-                clicked => {decompress(path.text)}                               
+                clicked => {decompress(filepath.text)}                               
             }
         }
 
